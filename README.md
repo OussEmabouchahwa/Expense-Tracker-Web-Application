@@ -1,225 +1,169 @@
-<div align="center">
-
-<img src="https://img.shields.io/badge/Masrouf-Expense%20Tracker-2A5BD7?style=for-the-badge&logo=databricks&logoColor=white" alt="Masrouf" height="50"/>
-
 # Masrouf — Expense Tracker Web Application
 
-**Track income, expenses, and financial summaries with clarity.**
+A full-stack application for tracking income, expenses, and financial summaries: log transactions, manage budgets per category, view spending reports, and monitor your savings rate across multiple bank and cash accounts.
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-18.3-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
-[![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=flat-square&logo=node.js&logoColor=white)](https://expressjs.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Prisma-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.prisma.io/)
-[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
-[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
-
-</div>
+The interface is built around a personal finance workflow and a documented design system ([docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md)). The dashboard shows a live spending-pace chart comparing current-month cumulative spend to the previous month, alongside a budget tracker and recent transactions.
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
-<div align="center">
+### Dashboard (Overview)
 
-### Dashboard Overview
-![Masrouf Dashboard](docs/screenshots/dashboard.png)
-*Financial overview — spending pace, budget status, and recent transactions at a glance.*
+| Desktop (1440px) | Tablet (768px) | Mobile (390px) |
+|---|---|---|
+| ![Overview desktop](docs/screenshots/overview-desktop-1440px.png) | ![Overview tablet](docs/screenshots/overview-tablet-768px.png) | ![Overview mobile](docs/screenshots/overview-mobile-390px.png) |
 
-</div>
+### Transactions
 
----
+| Desktop (1440px) | Tablet (768px) | Mobile (390px) |
+|---|---|---|
+| ![Transactions desktop](docs/screenshots/transactions-desktop-1440px.png) | ![Transactions tablet](docs/screenshots/transactions-tablet-768px.png) | ![Transactions mobile](docs/screenshots/transactions-mobile-390px.png) |
 
-## 📋 Table of Contents
+### Add / Edit Transaction Drawer
 
-- [About](#-about)
-- [Key Features](#-key-features)
-- [Tech Stack](#-tech-stack)
-- [Architecture](#️-architecture)
-- [Database Schema](#-database-schema)
-- [Getting Started](#-getting-started)
-- [Project Structure](#-project-structure)
-- [API Reference](#-api-reference)
-- [Scripts](#-scripts)
-- [Skills Demonstrated](#-skills-demonstrated)
+| Desktop (1440px) | Tablet (768px) | Mobile (390px) |
+|---|---|---|
+| ![Drawer desktop](docs/screenshots/drawer-desktop-1440px.png) | ![Drawer tablet](docs/screenshots/drawer-tablet-768px.png) | ![Drawer mobile](docs/screenshots/drawer-mobile-390px.png) |
 
----
+### Budgets
 
-## 🧾 About
+| Desktop (1440px) | Tablet (768px) | Mobile (390px) |
+|---|---|---|
+| ![Budgets desktop](docs/screenshots/budgets-desktop-1440px.png) | ![Budgets tablet](docs/screenshots/budgets-tablet-768px.png) | ![Budgets mobile](docs/screenshots/budgets-mobile-390px.png) |
 
-**Masrouf** (مصروف — Arabic for "expense") is a full-stack personal finance web application built as **Task 3** of the internship program. It allows users to track their income and expenses, manage multiple accounts, set monthly budgets per category, and visualize financial reports — all behind a secure authentication layer.
+### Reports
 
-> Built from scratch with a monorepo structure, type-safe API contracts, and a custom SVG charting system.
+| Desktop (1440px) | Tablet (768px) | Mobile (390px) |
+|---|---|---|
+| ![Reports desktop](docs/screenshots/reports-desktop-1440px.png) | ![Reports tablet](docs/screenshots/reports-tablet-768px.png) | ![Reports mobile](docs/screenshots/reports-mobile-390px.png) |
 
----
+### Accounts
 
-## ✨ Key Features
-
-| Feature | Description |
-|---|---|
-| 💸 **Expense Tracking** | Log expenses by payee, category, account, and date with soft-delete support |
-| 💰 **Income Management** | Track income transactions separately with dedicated categories |
-| 📊 **Financial Reports** | Monthly income vs expense bars, ranked category breakdown, and savings rate |
-| 📈 **Spending Pace** | Live chart comparing current-month cumulative spending to the previous month |
-| 🎯 **Budget Management** | Set per-category monthly limits with real-time pace indicators (over/ahead/on pace) |
-| 🏦 **Multi-Account** | Manage Cash, Bank, Card, and Savings accounts with opening balances |
-| 🔐 **User Authentication** | Cookie-based sessions with CSRF protection, argon2id password hashing, and rate limiting |
-| 🔑 **Password Reset** | Secure token-based password reset via email (Nodemailer) |
-| 📤 **CSV Export** | Export transactions to CSV with server-side safe rendering |
-| 🌍 **Locale-Aware** | Currency, locale, and timezone stored per user (defaults to TND / Africa/Tunis) |
+| Desktop (1440px) | Tablet (768px) | Mobile (390px) |
+|---|---|---|
+| ![Accounts desktop](docs/screenshots/accounts-desktop-1440px.png) | ![Accounts tablet](docs/screenshots/accounts-tablet-768px.png) | ![Accounts mobile](docs/screenshots/accounts-mobile-390px.png) |
 
 ---
 
-## 🛠 Tech Stack
+## Features
 
-### Frontend (`apps/web`)
+- Log income and expense transactions with payee, category, account, date, and optional note
+- Edit and soft-delete transactions; restore at any time
+- Spending-pace chart comparing current month vs previous month, day by day
+- Monthly budget limits per category with real-time pace indicators (on pace / ahead of pace / over budget)
+- Financial reports: income vs expense bars, savings rate, spending ranked by category
+- Multi-account support: Cash, Bank, Card, Savings with opening balances
+- Export transactions to CSV
+- User authentication with cookie sessions, CSRF protection, argon2id hashing, and rate limiting
+- Secure password reset via email token
+- Loading, empty, and error states on every view
+- Responsive from 360 px phones to wide desktops, keyboard accessible (WCAG 2.2 AA target)
+- All monetary values stored as integer minor units — no floating-point rounding errors
+
+---
+
+## Tech stack
+
 | Layer | Technology |
 |---|---|
-| UI Framework | React 18 + TypeScript |
-| Routing | React Router v6 |
-| State / Data Fetching | TanStack Query v5 |
-| Forms | React Hook Form + Zod |
-| Styling | Tailwind CSS (custom design tokens) |
-| Charts | Custom SVG with d3-scale & d3-shape |
-| Components | Radix UI primitives (Dialog, Select, Popover…) |
-| Build | Vite 5 |
-
-### Backend (`apps/api`)
-| Layer | Technology |
-|---|---|
-| Runtime | Node.js (ESM) |
-| Framework | Express 4 |
-| ORM | Prisma 5 |
-| Database | PostgreSQL 18 (embedded for dev) |
-| Auth | argon2id · cookie sessions · CSRF tokens |
-| Validation | Zod |
-| Logging | Pino + pino-http |
-| Rate Limiting | express-rate-limit |
-| Email | Nodemailer |
-
-### Tooling
-| Tool | Purpose |
-|---|---|
-| npm workspaces | Monorepo management |
-| `@masrouf/contracts` | Shared Zod schemas between API and Web |
-| Vitest | Unit & integration tests |
-| Playwright | End-to-end tests |
-| ESLint + Prettier | Code quality |
-| Docker Compose | Production deployment |
+| Frontend | React 18, TypeScript, Vite, Tailwind CSS, Radix UI, TanStack Query v5, React Hook Form, Zod |
+| Backend | Node.js 20+, Express 4, TypeScript, Zod, Pino |
+| Database | PostgreSQL through Prisma ORM (embedded for development) |
+| Auth | argon2id · DB-backed cookie sessions · CSRF tokens · express-rate-limit |
+| Charts | Custom SVG with d3-scale and d3-shape |
+| Testing | Vitest, Supertest, Testing Library, Playwright, k6 |
+| Tooling | ESLint, Prettier, npm workspaces, Docker Compose |
 
 ---
 
-## 🏗️ Architecture
+## Architecture
+
+```mermaid
+flowchart LR
+  UI[React SPA] -->|HTTP /api/*| MW[Auth + CSRF Middleware]
+  MW --> R[Module Router]
+  R --> C[Controller]
+  C --> S[Service]
+  S --> Repo[Repository]
+  Repo --> DB[(PostgreSQL)]
+  R -. validates .-> Z[Zod schemas]
+  UI -. shared .-> Z
+```
+
+- **Server** is layered: routes → controller → service → repository. Only the repository touches the database. All input is validated at the edge with Zod schemas shared from `packages/contracts`.
+- **Client** is organized by feature. Server state lives in TanStack Query, form state in React Hook Form, and active filters in the URL so views are shareable and bookmarkable.
+- **Design tokens** live in one CSS file (`tokens.css`) and are the single source of truth for colors, typography, spacing, and motion.
+- **Money** is always stored and computed as integer minor units (millimes for TND). Formatting is locale-aware and injected at display time only.
+
+---
+
+## Project structure
 
 ```
-expense-kit/                  ← Monorepo root
+expense-kit/                      ← npm workspace monorepo root
 ├── apps/
-│   ├── api/                  ← Express REST API
+│   ├── api/                      ← Express REST API
 │   │   ├── src/
-│   │   │   ├── modules/      ← Feature modules (accounts, budgets, categories, transactions, users)
-│   │   │   ├── middleware/   ← Auth, CSRF, error handler, request-id
-│   │   │   ├── lib/          ← Prisma client, logger, AppError
-│   │   │   └── config/       ← Env validation (Zod)
+│   │   │   ├── modules/          ← Feature modules
+│   │   │   │   ├── accounts/     ← controller · service · repository · routes
+│   │   │   │   ├── budgets/      ← controller · repository · routes
+│   │   │   │   ├── categories/   ← controller · service · repository · routes
+│   │   │   │   ├── transactions/ ← controller · repository · routes
+│   │   │   │   └── users/        ← controller · service · repository · routes
+│   │   │   ├── middleware/       ← auth-stub, CSRF, error handler, request-id
+│   │   │   ├── lib/              ← Prisma client, Pino logger, AppError
+│   │   │   └── config/           ← Zod-validated environment
 │   │   └── prisma/
-│   │       ├── schema.prisma ← Data model
-│   │       ├── migrations/   ← SQL migration history
-│   │       └── seed.ts       ← Demo data seeder
-│   └── web/                  ← React SPA
+│   │       ├── schema.prisma     ← Data model
+│   │       ├── migrations/       ← SQL migration history
+│   │       └── seed.ts           ← Demo data (12 months of transactions)
+│   └── web/                      ← React SPA
 │       └── src/
-│           ├── features/     ← Overview, Transactions, Budgets, Reports, Accounts
-│           ├── components/   ← Charts (SVG), Layout, UI primitives
-│           ├── app/          ← Router + AppShell
-│           └── lib/          ← Formatters, cn() utility
-└── packages/
-    └── contracts/            ← Shared Zod schemas (API ↔ Web)
-```
-
-### Request Flow
-
-```
-Browser → React SPA → TanStack Query → REST API (Express)
-                                            ↓
-                                      Auth Middleware
-                                      CSRF Check
-                                            ↓
-                                      Module Router
-                                            ↓
-                                      Prisma ORM → PostgreSQL
+│           ├── features/         ← overview · transactions · budgets · reports · accounts
+│           ├── components/       ← SVG charts, layout shell, UI primitives
+│           ├── app/              ← Router + AppShell
+│           └── lib/              ← formatters, cn() utility
+├── packages/
+│   └── contracts/                ← Shared Zod schemas and domain helpers (API ↔ Web)
+│       └── src/
+│           ├── schemas.ts        ← All request/response Zod schemas
+│           ├── money.ts          ← Minor-unit formatting and parsing
+│           ├── dates.ts          ← Timezone-safe month boundaries and helpers
+│           └── pace.ts           ← Spending pace calculation logic
+└── docs/
+    ├── DESIGN_SYSTEM.md
+    └── screenshots/
 ```
 
 ---
 
-## 🗄 Database Schema
+## Getting started
 
-```
-User ──┬── Session (cookie-based auth)
-       ├── PasswordResetToken
-       ├── Account (CASH | BANK | CARD | SAVINGS)
-       ├── Category (EXPENSE | INCOME, user-scoped)
-       ├── Transaction (linked to Account + Category, soft-delete)
-       └── Budget (per category per month, minor-unit limit)
-```
-
-> All monetary values are stored as **BigInt minor units** (e.g., 1 TND = 1000 millimes) to avoid floating-point errors.
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- **Node.js** ≥ 18
-- **npm** ≥ 9
-- **Docker** (optional — for production PostgreSQL)
-
-### 1. Clone the repository
+**Requirements:** Node.js 20 or newer, npm 9 or newer.
 
 ```bash
+# 1. Clone
 git clone https://github.com/OussEmabouchahwa/Expense-Tracker-Web-Application.git
 cd Expense-Tracker-Web-Application
-```
 
-### 2. Install dependencies
-
-```bash
+# 2. Install all dependencies (monorepo)
 npm install
-```
 
-### 3. Configure environment
-
-```bash
+# 3. Configure the API environment
 cp apps/api/.env.example apps/api/.env
-# Edit apps/api/.env with your settings
-```
+# Edit apps/api/.env — see the table below
 
-**Required `.env` variables:**
+# 4. Start the embedded PostgreSQL database
+npm run db:start
 
-```env
-DATABASE_URL="postgresql://masrouf:masrouf@localhost:5432/masrouf"
-SESSION_SECRET="change-me-to-a-long-random-string"
-CSRF_SECRET="another-long-random-string"
-COOKIE_DOMAIN="localhost"
-PORT=3000
-NODE_ENV=development
+# 5. Apply database migrations
+npm run db:migrate
 
-# Optional — for password reset emails
-SMTP_HOST=smtp.example.com
-SMTP_PORT=587
-SMTP_USER=user@example.com
-SMTP_PASS=yourpassword
-EMAIL_FROM="Masrouf <noreply@example.com>"
-```
+# 6. (Optional) Load demo data — 12 months of realistic transactions
+npm run db:seed
 
-### 4. Start the database
-
-```bash
-npm run db:start        # Starts embedded PostgreSQL
-npm run db:migrate      # Runs Prisma migrations
-npm run db:seed         # Seeds demo data (optional)
-```
-
-### 5. Start the development servers
-
-```bash
+# 7. Start both servers
 npm run dev
 ```
 
@@ -228,105 +172,127 @@ npm run dev
 | Web (React) | http://localhost:5173 |
 | API (Express) | http://localhost:3000 |
 
----
-
-## 📁 Project Structure
-
-```
-apps/api/src/modules/
-├── accounts/        → CRUD for bank/cash accounts
-├── budgets/         → Monthly budget limits per category
-├── categories/      → User-scoped income/expense categories
-├── transactions/    → Log, list, update, soft-delete transactions
-└── users/           → Registration, login, logout, password reset, profile
-
-apps/web/src/features/
-├── overview/        → Dashboard: summary cards, spending pace chart, budget bars, recent txns
-├── transactions/    → Transaction list with filters, add/edit drawer, CSV export
-├── budgets/         → Budget setup per category per month
-├── reports/         → Monthly income/expense bar chart, category breakdown
-└── accounts/        → Account management
-```
+Demo login (after seeding): **demo@masrouf.test** / **MasroufDemo-2026**
 
 ---
 
-## 📡 API Reference
+## Environment variables (`apps/api/.env`)
 
-All endpoints are prefixed with `/api/v1` and require authentication (cookie session + CSRF header) unless noted.
-
-| Method | Path | Description |
+| Variable | Default | Purpose |
 |---|---|---|
-| `POST` | `/auth/register` | Create account |
-| `POST` | `/auth/login` | Login (sets session cookie) |
-| `POST` | `/auth/logout` | Invalidate session |
-| `POST` | `/auth/forgot-password` | Request password reset email |
-| `POST` | `/auth/reset-password` | Submit reset token + new password |
-| `GET` | `/accounts` | List user accounts |
-| `POST` | `/accounts` | Create account |
-| `PATCH` | `/accounts/:id` | Update account |
-| `DELETE`| `/accounts/:id` | Archive account |
-| `GET` | `/categories` | List categories |
-| `POST` | `/categories` | Create category |
-| `GET` | `/transactions` | List transactions (keyset pagination, filters) |
-| `POST` | `/transactions` | Create transaction |
-| `PATCH` | `/transactions/:id` | Update transaction |
-| `DELETE`| `/transactions/:id` | Soft-delete transaction |
-| `GET` | `/transactions/export` | Download CSV |
-| `GET` | `/budgets` | List budgets for a month |
-| `PUT` | `/budgets` | Upsert budget for category+month |
-| `GET` | `/reports/summary` | Monthly income/expense/net summary |
-| `GET` | `/reports/categories` | Spending by category |
+| `DATABASE_URL` | `postgresql://masrouf:masrouf@localhost:5432/masrouf` | Prisma connection string |
+| `SESSION_SECRET` | *(required)* | Cookie signing secret — use a long random string |
+| `CSRF_SECRET` | *(required)* | CSRF token signing secret |
+| `COOKIE_DOMAIN` | `localhost` | Domain for session cookie |
+| `PORT` | `3000` | API port |
+| `NODE_ENV` | `development` | Runtime mode |
+| `SMTP_HOST` | — | SMTP server for password-reset emails |
+| `SMTP_PORT` | `587` | SMTP port |
+| `SMTP_USER` | — | SMTP username |
+| `SMTP_PASS` | — | SMTP password |
+| `EMAIL_FROM` | — | Sender address for outgoing email |
 
 ---
 
-## 📜 Scripts
+## Scripts
 
-| Command | Description |
+| Command | What it does |
 |---|---|
-| `npm run dev` | Start API + Web in parallel (with color output) |
-| `npm run build` | Build all packages and apps |
-| `npm run test` | Run all Vitest unit & integration tests |
-| `npm run test:coverage` | Run tests with coverage report |
-| `npm run test:e2e` | Run Playwright end-to-end tests |
+| `npm run dev` | Start API and web client together (coloured output) |
+| `npm run build` | Production build of all packages and apps |
+| `npm run lint` | ESLint across the monorepo |
+| `npm run typecheck` | `tsc --noEmit` on every workspace |
+| `npm run format` | Prettier format check |
+| `npm run format:fix` | Auto-fix formatting |
+| `npm run test` | Vitest unit and integration tests |
+| `npm run test:coverage` | Tests with coverage report |
+| `npm run test:e2e` | Playwright end-to-end tests |
 | `npm run db:start` | Start embedded PostgreSQL |
 | `npm run db:stop` | Stop embedded PostgreSQL |
 | `npm run db:migrate` | Apply pending Prisma migrations |
-| `npm run db:seed` | Seed demo user and transactions |
-| `npm run lint` | ESLint across the monorepo |
-| `npm run format` | Prettier format check |
-| `npm run format:fix` | Auto-fix formatting |
-| `npm run perf:load` | Run k6 load tests |
+| `npm run db:seed` | Insert 12 months of demo transactions |
+| `npm run perf:load` | k6 load test |
 
 ---
 
-## 🎓 Skills Demonstrated
+## API
 
-This project was built as part of a structured internship task covering:
+Base path: `/api`
 
-| Skill Area | Implementation |
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/users/register` | Create a new account |
+| `POST` | `/users/login` | Log in (sets session cookie) |
+| `POST` | `/users/logout` | Invalidate session |
+| `POST` | `/users/forgot-password` | Request a password-reset email |
+| `POST` | `/users/reset-password` | Submit reset token and new password |
+| `GET` | `/accounts` | List user accounts |
+| `POST` | `/accounts` | Create an account |
+| `PATCH` | `/accounts/:id` | Rename or retype an account |
+| `POST` | `/accounts/:id/archive` | Archive an account |
+| `GET` | `/categories` | List categories (filter by `?kind=EXPENSE\|INCOME`) |
+| `POST` | `/categories` | Create a category |
+| `PATCH` | `/categories/:id` | Rename a category |
+| `POST` | `/categories/:id/archive` | Archive a category |
+| `GET` | `/transactions` | List transactions with filters and keyset pagination |
+| `POST` | `/transactions` | Create a transaction |
+| `GET` | `/transactions/export` | Download as CSV |
+| `GET` | `/transactions/:id` | Get one transaction |
+| `PATCH` | `/transactions/:id` | Update a transaction |
+| `DELETE` | `/transactions/:id` | Soft-delete a transaction |
+| `GET` | `/budgets` | List budgets for a month (`?month=YYYY-MM`) |
+| `PUT` | `/budgets/:categoryId/:month` | Upsert a budget limit |
+| `DELETE` | `/budgets/:categoryId/:month` | Remove a budget |
+| `POST` | `/budgets/copy` | Copy previous month's budgets to a target month |
+
+**List transactions query params:** `from`, `to`, `kind`, `accountId`, `categoryId`, `q`, `min`, `max`, `cursor`, `limit` (1–100, default 25)
+
+---
+
+## Data model
+
+| Model | Key fields |
 |---|---|
-| **Full-Stack Development** | TypeScript monorepo with shared contracts between React SPA and Express API |
-| **Authentication** | Argon2id hashing, DB-backed cookie sessions, CSRF tokens, rate limiting, password reset |
-| **Database Operations** | Prisma ORM, PostgreSQL, migrations, soft deletes, keyset pagination, composite indexes |
-| **Data Visualization** | Custom SVG charts (spending pace line, monthly bars, category bars, budget pace) |
-| **API Design** | RESTful resource endpoints, Zod validation, user-scoped repositories, error handling |
-| **Testing & QA** | Vitest unit/integration tests, Testing Library components, Playwright E2E, k6 load tests |
-| **DevOps** | Docker Compose, multi-stage builds, Caddy HTTPS, GitHub Actions CI/CD |
+| `User` | id · email (unique) · passwordHash · name · currency · locale · timezone |
+| `Session` | SHA-256 id · userId · expiresAt · csrfToken |
+| `PasswordResetToken` | tokenHash (unique) · expiresAt · usedAt |
+| `Account` | id · userId · name · type (CASH/BANK/CARD/SAVINGS) · openingBalanceMinor |
+| `Category` | id · userId · name · kind (EXPENSE/INCOME) · archivedAt |
+| `Transaction` | id · userId · accountId · categoryId · kind · amountMinor (BigInt) · occurredOn · payee · note · deletedAt |
+| `Budget` | userId · categoryId · month (1st of month) · limitMinor — unique per user+category+month |
+
+All monetary amounts are stored as **BigInt minor units** (e.g., 1 TND = 1 000 millimes).
 
 ---
 
-## 👨‍💻 Author
+## Testing
 
-**Oussema Bouchahwa**
-- GitHub: [@OussEmabouchahwa](https://github.com/OussEmabouchahwa)
-- Repository: [Expense-Tracker-Web-Application](https://github.com/OussEmabouchahwa/Expense-Tracker-Web-Application)
+- Repository and service functions are unit-tested with Vitest and a fake in-memory repository.
+- API routes are integration-tested end-to-end with Supertest against a real test database.
+- UI components are tested with Testing Library, queried by role and accessible name.
+- A Playwright test covers the critical path: register → log in → add transaction → edit → delete.
+- k6 load tests exercise the transaction list endpoint under sustained concurrent load.
 
 ---
 
-<div align="center">
+## Design system
 
-*Built with ❤️ as part of an internship Full-Stack Development task.*
+Colors, typography, spacing, motion, component variants, and accessibility requirements are documented in [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md). The palette follows a 60/30/10 rule: Paper (backgrounds), Ledger (text and borders), and Stamp (primary actions). Semantic colors — gain, loss, warn — are reserved exclusively for money and status; they are never used for decoration.
 
-</div>
-#   E x p e n s e - T r a c k e r - W e b - A p p l i c a t i o n  
- 
+---
+
+## Contributing
+
+Use [Conventional Commits](https://www.conventionalcommits.org/). Before opening a pull request run:
+
+```bash
+npm run lint && npm run typecheck && npm run test
+```
+
+---
+
+## Author
+
+**Oussema Bouchahwa** — [github.com/OussEmabouchahwa](https://github.com/OussEmabouchahwa)
+
+Repository: [Expense-Tracker-Web-Application](https://github.com/OussEmabouchahwa/Expense-Tracker-Web-Application)
