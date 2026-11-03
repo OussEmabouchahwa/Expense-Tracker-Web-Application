@@ -328,5 +328,4 @@ This project was built as part of a structured internship task covering:
 *Built with ❤️ as part of an internship Full-Stack Development task.*
 
 </div>
-#   E x p e n s e - T r a c k e r - W e b - A p p l i c a t i o n  
- 
+#
