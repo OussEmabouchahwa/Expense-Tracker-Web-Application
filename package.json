@@ -1,0 +1,33 @@
+{
+  "name": "masrouf-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n \"api,web\" -c \"blue,green\" \"npm --workspace=apps/api run dev\" \"npm --workspace=apps/web run dev\"",
+    "build": "npm --workspace=packages/contracts run build && npm --workspace=apps/api run build && npm --workspace=apps/web run build",
+    "lint": "eslint . --ext .ts,.tsx",
+    "typecheck": "npm run --workspaces --if-present typecheck",
+    "format": "prettier --check \"**/*.{ts,tsx,css,json,md}\"",
+    "format:fix": "prettier --write \"**/*.{ts,tsx,css,json,md}\"",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "db:migrate": "npm --workspace=apps/api run db:migrate",
+    "db:seed": "npm --workspace=apps/api run db:seed",
+    "perf:load": "k6 run perf/k6/main.js"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  }
+}
