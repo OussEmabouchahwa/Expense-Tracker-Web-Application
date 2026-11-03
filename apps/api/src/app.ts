@@ -2,6 +2,12 @@ import express, { Express, Request, Response, NextFunction } from "express";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import { pinoHttp } from "pino-http";
+import { devAuthStub } from "./middleware/auth-stub.js";
+import { usersRouter } from "./modules/users/users.routes.js";
+import { accountsRouter } from "./modules/accounts/accounts.routes.js";
+import { categoriesRouter } from "./modules/categories/categories.routes.js";
+import { transactionsRouter } from "./modules/transactions/transactions.routes.js";
+import { budgetsRouter } from "./modules/budgets/budgets.routes.js";
 import { logger } from "./lib/logger.js";
 import { requestIdMiddleware } from "./middleware/request-id.js";
 import { errorHandler } from "./middleware/error-handler.js";
@@ -52,7 +58,17 @@ export function createApp(): Express {
     res.status(200).json({ status: "ready" });
   });
 
-  return app;
+   // Development auth stub
+   app.use(devAuthStub);
+
+   // API routers
+   app.use('/api/users', usersRouter);
+   app.use('/api/accounts', accountsRouter);
+   app.use('/api/categories', categoriesRouter);
+   app.use('/api/transactions', transactionsRouter);
+   app.use('/api/budgets', budgetsRouter);
+
+   return app;
 }
 
 export function finalizeApp(app: Express): void {
