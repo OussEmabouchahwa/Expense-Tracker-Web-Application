@@ -1,0 +1,137 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum AccountType {
+  CASH
+  BANK
+  CARD
+  SAVINGS
+}
+
+enum CategoryKind {
+  EXPENSE
+  INCOME
+}
+
+enum TransactionKind {
+  EXPENSE
+  INCOME
+}
+
+model User {
+  id                  String               @id @default(uuid())
+  email               String               @unique
+  passwordHash        String
+  name                String
+  currency            String               @default("TND")
+  locale              String               @default("fr-TN")
+  timezone            String               @default("Africa/Tunis")
+  createdAt           DateTime             @default(now())
+  sessions            Session[]
+  passwordResetTokens PasswordResetToken[]
+  accounts            Account[]
+  categories          Category[]
+  transactions        Transaction[]
+  budgets             Budget[]
+
+  @@map("users")
+}
+
+model Session {
+  id         String   @id // SHA-256 hash
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt  DateTime
+  lastUsedAt DateTime @default(now())
+  userAgent  String?
+  csrfToken  String
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+model PasswordResetToken {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+  @@map("password_reset_tokens")
+}
+
+model Account {
+  id                  String        @id @default(uuid())
+  userId              String
+  user                User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name                String
+  type                AccountType
+  openingBalanceMinor BigInt        @default(0)
+  archivedAt          DateTime?
+  transactions        Transaction[]
+
+  @@index([userId])
+  @@map("accounts")
+}
+
+model Category {
+  id           String        @id @default(uuid())
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name         String
+  kind         CategoryKind
+  archivedAt   DateTime?
+  transactions Transaction[]
+  budgets      Budget[]
+
+  @@unique([userId, kind, name])
+  @@index([userId])
+  @@map("categories")
+}
+
+model Transaction {
+  id          String          @id @default(uuid())
+  userId      String
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accountId   String
+  account     Account         @relation(fields: [accountId], references: [id], onDelete: Restrict)
+  categoryId  String
+  category    Category        @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  kind        TransactionKind
+  amountMinor BigInt
+  occurredOn  DateTime        @db.Date
+  payee       String
+  note        String?
+  deletedAt   DateTime?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@index([userId, occurredOn(sort: Desc), id(sort: Desc)])
+  @@index([userId, categoryId, occurredOn])
+  @@index([userId, kind, occurredOn])
+  @@map("transactions")
+}
+
+model Budget {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  month      DateTime @db.Date // 1st day of month
+  limitMinor BigInt
+
+  @@unique([userId, categoryId, month])
+  @@index([userId, month])
+  @@map("budgets")
+}
