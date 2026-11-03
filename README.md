@@ -279,20 +279,5 @@ All monetary amounts are stored as **BigInt minor units** (e.g., 1 TND = 1 000 m
 
 Colors, typography, spacing, motion, component variants, and accessibility requirements are documented in [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md). The palette follows a 60/30/10 rule: Paper (backgrounds), Ledger (text and borders), and Stamp (primary actions). Semantic colors — gain, loss, warn — are reserved exclusively for money and status; they are never used for decoration.
 
----
-
-## Contributing
-
-Use [Conventional Commits](https://www.conventionalcommits.org/). Before opening a pull request run:
-
-```bash
-npm run lint && npm run typecheck && npm run test
-```
-
----
-
-## Author
-
-**Oussema Bouchahwa** — [github.com/OussEmabouchahwa](https://github.com/OussEmabouchahwa)
-
-Repository: [Expense-Tracker-Web-Application](https://github.com/OussEmabouchahwa/Expense-Tracker-Web-Application)
+</div>
+#
